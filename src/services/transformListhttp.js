@@ -1,9 +1,43 @@
 import smartListmodel from "../models/smartListmodel.js";
+import smartOrder from "./smartOrder.js"
 
 async function find(res){
-    await smartListmodel.smartList.find().then(data => res.json(data))
+    const newList = await smartListmodel.smartList.find().then(data => {
+        // data = smartOrder.full(res)
+
+         res.json(data)
+    })
     .catch(err => res.status(500)
     .json('err'));
+    // const newList = await smartListmodel.smartList.find(data => res.json(data))
+    console.log(res);
+     console.log(newList);
+}
+
+async function createList(res){
+    let newList =  await smartListmodel.smartList.find()
+
+    if(newList.length == 0 ){
+        console.log('TransformListhttp create List Starting');
+        const body = {
+            title: 'Lista de Prueba',
+        date: Date.now,
+        listType: ['WeekList'],
+        data: [],
+        userData: {
+            id: '',
+            userName: 'UserTest1'
+        }}
+        newList = await this.newList(body)
+    }else{
+        console.log('TransformListhttp create List ERRRORRR');
+    }
+    // const newList = await smartListmodel.smartList.find(data => res.json(data))
+    console.log(`this is wow ${newList}`);
+    smartOrder.full(newList).then(data => {
+        res.json(data)
+    })
+    .catch(err => res.status(500).json({error: 'Not found 500', message: 'ERROR EN TransfomrListHTTP'}))
 }
 
 function findById(id,res){
@@ -17,7 +51,7 @@ function findById(id,res){
 }
 
 function newList(body){
-    const job = new smartListmodel.smartList({
+    const listAux = new smartListmodel.smartList({
         title: body.title,
         date: body.date,
         listType: body.listType,
@@ -27,7 +61,7 @@ function newList(body){
             userName: body.userData.userName
         }
     });
-    return job
+    return listAux
 }
 
 function findAndModif(id, body, res){
@@ -55,5 +89,5 @@ function findAndDel(id, res){
 }
 
 export default{
-    find,findById,newList,findAndModif,findAndDel
+    find,findById,newList,findAndModif,findAndDel,createList
 }

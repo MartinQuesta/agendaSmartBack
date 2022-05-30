@@ -1,7 +1,7 @@
 import transformhttp from '../services/transformJobhttp.js'
 
 function getJob(res){
-    transformhttp.find(res) //GENERAR UN TDD QUE ENVIE UN GET Y VERIFIQUE LA LISTA DEVUELTA
+    const plainList = transformhttp.find(res) //GENERAR UN TDD QUE ENVIE UN GET Y VERIFIQUE LA LISTA DEVUELTA
 }
 
 function findJob(req,res){

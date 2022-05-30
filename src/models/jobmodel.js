@@ -13,6 +13,7 @@ const jobschema = new Schema({
     },
     motiv: Boolean,
     meta: {
+        completed: Boolean,
         isDelayed: Boolean,
         isDaily: Boolean,
         countRep: Number
@@ -43,6 +44,7 @@ function createTestJob(){
         priority: 2,
         motiv: true,
         meta: {
+            completed: false,
             isDelayed: false,
             isDaily: true,
             countRep: 2

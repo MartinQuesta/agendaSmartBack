@@ -1,7 +1,7 @@
 import transformhttp from '../services/transformListhttp.js'
 
 function getList(res){
-    transformhttp.find(res) //GENERAR UN TDD QUE ENVIE UN GET Y VERIFIQUE LA LISTA DEVUELTA
+    transformhttp.createList(res) //GENERAR UN TDD QUE ENVIE UN GET Y VERIFIQUE LA LISTA DEVUELTA
 }
 
 function findList(req,res){

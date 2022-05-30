@@ -1,9 +1,19 @@
 import jobmodel from "../models/jobmodel.js";
 
 async function find(res){
-    await jobmodel.jobX.find().then(data => res.json(data))
+    await jobmodel.jobX.find().then(data => {
+        res.json(data)
+    })
     .catch(err => res.status(500)
     .json('err'));
+}
+async function internalFind(){
+    const response = await jobmodel.jobX.find().then(data => {
+        console.log('ESTOY ACA??');
+        return data
+    })
+    .catch(err => console.log(err));
+    return response
 }
 
 function findById(id,res){
@@ -14,24 +24,6 @@ function findById(id,res){
     })
     .catch(err => res.status(500).json({ error: 'Not found 500', message: `Job aca esta el error aca esta el error with id "${id} not found" and error: ${err}` }))
     //return res        /////PORQUE DEVUELVE IGUAL 
-}
-
-function newJob(body){
-    const job = new jobmodel.jobX({
-        title: body.title,
-        description: body.description,
-        keyWords: body.keyWords,
-        date: body.date,
-        priority: body.priority,
-        motiv: body.motiv,
-        meta: {
-            isDelayed: body.meta.isDelayed,
-            isDaily: body.meta.isDaily,
-            countRep: body.meta.countRep
-        }
-        ///////
-    });
-    return job
 }
 
 function findAndModif(id, body, res){
@@ -58,6 +50,25 @@ function findAndDel(id, res){
 
 }
 
+function newJob(body){
+    const job = new jobmodel.jobX({     ///NECESITO DATOS VALIDOS >> SERVICE
+        title: body.title,
+        description: body.description,
+        keyWords: body.keyWords,
+        date: body.date,
+        priority: body.priority,
+        motiv: body.motiv,
+        meta: {
+            completed: body.meta.completed,
+            isDelayed: body.meta.isDelayed,
+            isDaily: body.meta.isDaily,
+            countRep: body.meta.countRep
+        }
+        ///////
+    });
+    return job
+}
+
 export default{
-    find,findById,newJob,findAndModif,findAndDel
+    find,findById,newJob,findAndModif,findAndDel,internalFind
 }
