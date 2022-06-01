@@ -14,6 +14,8 @@ Router.get('/:id', (req, res) => {
 })
 
 Router.post('/', async (req, res) => {
+    console.log('AQUI ROUTE');
+    console.log(req.body);
     jobshandler.createJob(req, res)
 });
 
@@ -22,6 +24,8 @@ Router.patch('/:id', (req, res) => {
 });
 
 Router.delete('/:id', (req, res) => {
+    console.log('ROUTE DELETE');
+    console.log(res);
     jobshandler.findAndDel(req,res)
     
 });

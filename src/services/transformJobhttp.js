@@ -52,7 +52,7 @@ function findAndDel(id, res){
 
 function newJob(body){
     const job = new jobmodel.jobX({     ///NECESITO DATOS VALIDOS >> SERVICE
-        title: body.title,
+        tittle: body.tittle,
         description: body.description,
         keyWords: body.keyWords,
         date: body.date,

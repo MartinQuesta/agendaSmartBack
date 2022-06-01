@@ -2,15 +2,16 @@ import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
 const jobschema = new Schema({
-    title: String,
+    tittle: String,
     description: String,
     keyWords: [String],
     date: { type:Date, default: Date.now },
-    priority: {
-        type: Number,
-        min: [0, '1 is Urgent Priority'],       //https://mongoosejs.com/docs/validation.html //Validators mongoose
-        max: [6, '5 is Lowest Priority']
-    },
+    priority: Number,
+    // priority: {
+    //     type: Number,
+    //     min: [0, '1 is Urgent Priority'],       //https://mongoosejs.com/docs/validation.html //Validators mongoose
+    //     max: [6, '5 is Lowest Priority']
+    // },
     motiv: Boolean,
     meta: {
         completed: Boolean,
@@ -37,7 +38,7 @@ function testJob (){
 }
 function createTestJob(){
     const job1 = new jobX({
-        title: 'jobTest1',
+        tittle: 'jobTest1',
         description: 'Esto es una descripcion',
         keyWords: ['job','Test'],
         date: { type:Date, default: Date.now },
