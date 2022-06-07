@@ -1,4 +1,4 @@
-import transformhttp from '../services/transformListhttp.js'
+import transformhttp from '../services/httpTransformListToMongo.js'
 
 function getList(res){
     transformhttp.createList(res) //GENERAR UN TDD QUE ENVIE UN GET Y VERIFIQUE LA LISTA DEVUELTA

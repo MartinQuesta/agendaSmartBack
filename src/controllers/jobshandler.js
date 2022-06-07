@@ -1,32 +1,21 @@
-import transformhttp from '../services/transformJobhttp.js'
+import transformhttp from '../services/httpTransformJobToMongo.js'
 
-function getJob(res){
-    const plainList = transformhttp.find(res) //GENERAR UN TDD QUE ENVIE UN GET Y VERIFIQUE LA LISTA DEVUELTA
+async function getJob(){
+    const plainList = await transformhttp.find() //GENERAR UN TDD QUE ENVIE UN GET Y VERIFIQUE LA LISTA DEVUELTA
     return plainList;
 }
 
 function findJob(req,res){
     const id = req.params.id
-    return transformhttp.findById(id,res)
+    const response = transformhttp.findById(id,res)
+    return response
 }
-
-async function createJob(req,res){
-  //console.log(req.body);              //the body is OK??
-    const job = transformhttp.newJob(req.body)       //I kept the body
-    console.log('AQUI CONROLLER');
-    console.log(req.body);
-  //console.log(job);                 // model its OK??
-    try {
-        const jobGuardado = await job.save();
-        console.log('jobGuardado');
-        console.log(jobGuardado);
-        res.status(200).json({
-            data: jobGuardado
-        })
-    } catch (error) {
-        res.status(400).json({ error })
-    }
-    
+async function createJob(body){
+    console.log('este es el body');
+    console.log(body);
+    const response = await transformhttp.createJob(body)
+    console.log(response);
+    return response.data
 }
 
 function modifyJob(req,res){
@@ -37,9 +26,7 @@ function modifyJob(req,res){
 
 function findAndDel(req,res){
     const id = req.params.id
-    console.log('AQUIiiiiiiiii');
     transformhttp.findAndDel(id,res)
-    
 }
 
 export default {

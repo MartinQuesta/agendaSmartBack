@@ -1,6 +1,6 @@
-import smartListmodel from "../models/smartListmodel.js";
-import listaTools from "./listaTools.js";
-import transformJobhttp from "./transformJobhttp.js";
+import smartListmodel from "../models/smartList-model.js";
+import listaTools from "./toolsForLists.js";
+import transformJobhttp from "./httpTransformJobToMongo.js";
 
 async function full(list){
     console.log('Smart Order Service');

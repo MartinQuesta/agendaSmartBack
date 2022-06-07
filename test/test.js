@@ -1,9 +1,9 @@
 import { expect } from 'chai'
 import { assert } from 'chai'
 import axios from 'axios' 
-import transformJobhttp from '../src/services/transformJobhttp.js'
-import Jobmodel from '../src/models/jobmodel.js'
-import Listmodel from '../src/models/smartListmodel.js'
+import transformJobhttp from '../src/services/httpTransformJobToMongo.js'
+import Jobmodel from '../src/models/job-model.js'
+import Listmodel from '../src/models/smartList-model.js'
 
 //import AgendaSmartDemo from '../src/app.js'
 

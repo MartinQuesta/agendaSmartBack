@@ -1,4 +1,4 @@
-import smartListmodel from "../models/smartListmodel.js";
+import smartListmodel from "../models/smartList-model.js";
 import smartOrder from "./smartOrder.js"
 
 async function find(res){

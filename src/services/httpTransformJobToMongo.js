@@ -1,11 +1,15 @@
-import jobmodel from "../models/jobmodel.js";
+import { response } from "express";
+import jobmodel from "../models/job-model.js";
 
-async function find(res){
+async function find(){
+    let response
     await jobmodel.jobX.find().then(data => {
-        res.json(data)
+        response = data
+        //res.json(data)
     })
-    .catch(err => res.status(500)
-    .json('err'));
+    .catch(err => response.status(500)
+    .json(err));
+    return response
 }
 async function internalFind(){
     const response = await jobmodel.jobX.find().then(data => {
@@ -49,6 +53,20 @@ function findAndDel(id, res){
     .catch(error => res.status(500).json(error));
 
 }
+async function createJob(jobParams){       //I kept the body
+    let response = {}
+    const job = newJob(jobParams)
+    await job.save()
+    .then(job => {
+        response.data = job
+        response.status = 0
+        })
+    .catch(err => {
+        response.data = err
+        response.status = 1
+    });
+    return response
+}
 
 function newJob(body){
     const job = new jobmodel.jobX({     ///NECESITO DATOS VALIDOS >> SERVICE
@@ -70,5 +88,5 @@ function newJob(body){
 }
 
 export default{
-    find,findById,newJob,findAndModif,findAndDel,internalFind
+    find,findById,newJob,findAndModif,findAndDel,internalFind,createJob
 }

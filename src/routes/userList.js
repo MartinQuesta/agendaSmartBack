@@ -1,5 +1,5 @@
 import express from "express";
-import listshandler from '../controllers/listshandler.js'
+import listshandler from '../controllers/listsHandler.js'
 
 
 const Router = express.Router()

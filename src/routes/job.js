@@ -1,22 +1,32 @@
 import express from "express";
-import jobshandler from '../controllers/jobshandler.js'
+import jobshandler from '../controllers/jobsHandler.js'
 
 
 const Router = express.Router()
 
-Router.get('/', (req, res) => {
+Router.get('/', async (req, res) => {
 //Método GET para traer tabla
-    jobshandler.getJob(res)
+res.json(await jobshandler.getJob())
 })
 
 Router.get('/:id', (req, res) => {
+    //const myRequest = req
    jobshandler.findJob(req,res)
 })
 
 Router.post('/', async (req, res) => {
-    console.log('AQUI ROUTE');
-    console.log(req.body);
-    jobshandler.createJob(req, res)
+    const body = req.body
+    jobshandler.createJob(body)
+    .then(response => {
+        res.status(200).json({
+            'data': response
+        })
+        //console.log(response);
+        // res.json(response)
+    })
+    
+    
+    // res.json(await jobshandler.createJob(request))
 });
 
 Router.patch('/:id', (req, res) => {
@@ -25,9 +35,7 @@ Router.patch('/:id', (req, res) => {
 
 Router.delete('/:id', (req, res) => {
     console.log('ROUTE DELETE');
-    console.log(res);
     jobshandler.findAndDel(req,res)
-    
 });
 
 export default {

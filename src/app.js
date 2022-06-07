@@ -13,8 +13,8 @@ import Lists from './routes/userList.js'
 
 
 //const config = dotenv.config()
-import './models/smartListmodel.js';   //Model de lista Smart
-import './models/jobmodel.js';     //Model de tarea
+import './models/smartList-model.js';   //Model de lista Smart
+import './models/job-model.js';     //Model de tarea
 
 const app = express();     ////Initializing Express 2
 const port = 3500;

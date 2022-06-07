@@ -1,4 +1,4 @@
-import listaTools from '../services/listaTools.js'
+import listaTools from '../services/toolsForLists.js'
 
 const listaTareasDiarias = []
 const listaTareasSemanales = []

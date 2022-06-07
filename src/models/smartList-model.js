@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import Job from './jobmodel.js'
+import Job from './job-model.js'
 const Schema = mongoose.Schema
 
 const smartListschema = new Schema({
