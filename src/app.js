@@ -2,12 +2,46 @@ import express from 'express'       //Initializing Express 1
 import bodyparser from 'body-parser'
 import cors from 'cors'
 import controllers from './controllers/listaTools.js'
+import Login from './routes/login.js'
+import Register from './routes/register.js'
 import mongoose from 'mongoose'
 import mongoDB from './middleware/mongoose.cjs'
 import Jobs from './routes/job.js'
 import Lists from './routes/userList.js'
+import bodyParser from 'body-parser'
+import path from 'path';
 //import {config} from 'dotenv'
 //const express = require('express')
+const app = express();     ////Initializing Express 2
+
+
+let renderHTML = path.resolve('./index.html');
+app.get('/', function (req, res) {
+    res.sendFile(renderHTML);
+})
+
+/*
+mongoose.connect(process.env.URLDB, {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useUnifiedTopology: true
+}, (err) => {
+  if (err) throw err;
+      
+  console.log("Base de datos online");
+});
+
+app.listen(process.env.PORT, ()=> {
+  console.log("Escuchando en puerto 3000");
+})
+*/
+
+//simulo una base de datos en memoria
+// usuarios:
+const list = [{user:"Juan",pass:123},{user:"Tincho",pass:124}]
+
+
+
 
 
 
@@ -15,13 +49,19 @@ import Lists from './routes/userList.js'
 //const config = dotenv.config()
 import './models/smartList-model.js';   //Model de lista Smart
 import './models/job-model.js';     //Model de tarea
+import './models/user.js';
 
-const app = express();     ////Initializing Express 2
+
 const port = 3500;
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+// parse application/json
+app.use(bodyParser.json())
 //const Job = require('./routes/job.js')
 //const mongoDBmiddleware = mongoDB.dbconnect();
 const portEnv = process.env.PORT || 3500;
-app.use(express.json({ extended: false }));
+//app.use(express.json({ extended: false }));
 
 /*const mongoDBmiddleware = function (req,res,next){
   console.log('LOGGED');
@@ -48,6 +88,9 @@ app.get('/', (req, res) => {
 
 app.use('/api/tareas', Jobs.Router)
 app.use('/api/lists', Lists.Router)
+app.use('/login', Login.Router);
+app.use('/register', Register.Router);
+
 
 app.use(function (req, res, next){
   next(createError(404))
