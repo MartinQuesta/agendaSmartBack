@@ -60,12 +60,13 @@ async function createJob(jobParams){       //I kept the body
     .then(job => {
         response.data = job
         response.status = 0
+        return response.data
+
         })
     .catch(err => {
         response.data = err
         response.status = 1
     });
-    return response
 }
 
 function newJob(body){

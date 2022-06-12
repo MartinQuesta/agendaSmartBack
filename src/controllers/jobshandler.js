@@ -10,12 +10,15 @@ function findJob(req,res){
     const response = transformhttp.findById(id,res)
     return response
 }
-async function createJob(body){
+async function createJob(body,res){
+    const response = res
     console.log('este es el body');
     console.log(body);
-    const response = await transformhttp.createJob(body)
+    await transformhttp.createJob(body).then(job => response.json(job))
+    // const response = await transformhttp.createJob(body)
     console.log(response);
-    return response.data
+    return response
+    // return response.data
 }
 
 function modifyJob(req,res){

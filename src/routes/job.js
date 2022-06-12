@@ -16,14 +16,16 @@ Router.get('/:id', (req, res) => {
 
 Router.post('/', async (req, res) => {
     const body = req.body
-    jobshandler.createJob(body)
-    .then(response => {
-        res.status(200).json({
-            'data': response
-        })
-        //console.log(response);
-        // res.json(response)
-    })
+    jobshandler.createJob(body,res)
+    // .then(response => {
+    //     res.status(200).json({
+    //         'body': response,
+    //         'statusMessage': 'OK'
+    //     })
+    //     console.log('AQUI res');
+    //     console.log(res);
+    //     //res.json(response)
+    // })
     
     
     // res.json(await jobshandler.createJob(request))
