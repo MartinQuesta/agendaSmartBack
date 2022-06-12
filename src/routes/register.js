@@ -7,12 +7,14 @@ Router.post('/', function (req, res) {
   let body = req.body;
   console.log('Aqui estamo en register');
   console.log(body);
-  let { nombre, email, password, role } = body;
+  let { nombre, apellido, edad, email, password, rol } = body;
   let usuario = new Usuario.user({
     nombre,
+    apellido,
+    edad,
     email,
     password: bcrypt.hashSync(password, 10),
-    role
+    rol
   });
   console.log(usuario);
 usuario.save((err, usuarioDB) => {

@@ -21,7 +21,6 @@ const jobschema = new Schema({
     }
   //{id:1, desc:'jobXDiaria', prioridad:2,  palabraClave:'jobX', motiv:'false', atrasada:0, cantRep:1, esDia: 'true'},
 })
-
 const jobX = mongoose.model('job', jobschema)
 
 //console.log(job1); // 100% match in create new
