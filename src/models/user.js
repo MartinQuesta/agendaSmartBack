@@ -37,9 +37,9 @@ let usuarioSchema = new Schema({
         required: [true],
         enum: rolesValidos,
     },
-    });
+});
 
-    const user = mongoose.model('Usuario', usuarioSchema)
+const user = mongoose.model('Usuario', usuarioSchema)
     // elimina la key password del objeto que retorna al momento de crear un usuario
 usuarioSchema.methods.toJSON = function() {
     let user = this;
@@ -52,8 +52,26 @@ usuarioSchema.methods.toJSON = function() {
     message: '{PATH} debe de ser único'
 })
 
+function testUser (){
+    const user = mongoose.model('Usuario', usuarioSchema)
+    return createUserTest(user)
+}
+
+function createUserTest(){
+    const user = new userX({
+        nombre: 'Juan',
+        apellido: 'Gimenez',
+        edad: 28,
+        email: 'juan@hot.com',
+        password: "12345",
+        rol: 'USER'
+      
+    })
+    return user
+}
+
 
 
 export default {
-    user
+    user, createUserTest, testUser
 }
