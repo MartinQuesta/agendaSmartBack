@@ -7,36 +7,49 @@ const jobschema = new Schema({
     keyWords: [String],
     date: { type:Date, default: Date.now },
     priority: Number,
-    // priority: {
-    //     type: Number,
-    //     min: [0, '1 is Urgent Priority'],       //https://mongoosejs.com/docs/validation.html //Validators mongoose
-    //     max: [6, '5 is Lowest Priority']
-    // },
     motiv: Boolean,
     meta: {
         completed: Boolean,
         isDelayed: Boolean,
         isDaily: Boolean,
-        countRep: Number
+        countRep: Number,
+        userData: {
+            userID: String,
+            userToken: String
+        }
     }
-  //{id:1, desc:'jobXDiaria', prioridad:2,  palabraClave:'jobX', motiv:'false', atrasada:0, cantRep:1, esDia: 'true'},
 })
-const jobX = mongoose.model('job', jobschema)
 
-//console.log(job1); // 100% match in create new
+const jobListInstance = (instance) => mongoose.model(`job_${instance}`, jobschema)
 
-//console.log(job1); armar Test AQUIIIIIIII
-//console.log(job1.keyWords[1]);
-//console.log(job1.date);
-//const varJob =
-//console.log(testJob());
-//module.exports = job
+const jobDBCreator = (instancia,body) => {
+    const jobDBModCreator = mongoose.model(`job_${instancia}`, jobschema)
+    const job = new jobDBModCreator({     ///NECESITO DATOS VALIDOS >> SERVICE
+        tittle: body.tittle,
+        description: body.description,
+        keyWords: body.keyWords,
+        date: body.date,
+        priority: body.priority,
+        motiv: body.motiv,
+        meta: {
+            completed: body.meta.completed,
+            isDelayed: body.meta.isDelayed,
+            isDaily: body.meta.isDaily,
+            countRep: body.meta.countRep,
+            userData: {
+                userID: body.meta.userData.userID,
+                userToken: body.meta.userData.userToken
+            }
+        }
+        ///////
+    });
+    return job
+};
+
 function testJob (){
-    const jobX = mongoose.model('job', jobschema)
-    return createTestJob(jobX)
-}
-function createTestJob(){
-    const job1 = new jobX({
+    const jobSchema = mongoose.model('job_Test', jobschema)
+    
+    const job = new jobSchema({     ///NECESITO DATOS VALIDOS >> SERVICE
         tittle: 'jobTest1',
         description: 'Esto es una descripcion',
         keyWords: ['job','Test'],
@@ -47,13 +60,38 @@ function createTestJob(){
             completed: false,
             isDelayed: false,
             isDaily: true,
-            countRep: 2
+            countRep: 2,
+            userData: {
+                userID: 'job_Test',
+                userToken: '1001'
+            }
         }
-      //{id:1, desc:'jobXDiaria', prioridad:2,  palabraClave:'jobX', motiv:'false', atrasada:0, cantRep:1, esDia: 'true'},
-    })
-    return job1
+    });
+    // return createTestJob(jobSchema)
+    return job
 }
+// function createTestJob(jobSchema){
+//     const job = new jobSchema({     ///NECESITO DATOS VALIDOS >> SERVICE
+//         tittle: 'jobTest1',
+//         description: 'Esto es una descripcion',
+//         keyWords: ['job','Test'],
+//         date: { type:Date, default: Date.now },
+//         priority: 2,
+//         motiv: true,
+//         meta: {
+//             completed: false,
+//             isDelayed: false,
+//             isDaily: true,
+//             countRep: 2,
+//             userData: {
+//                 userID: 'job_Test',
+//                 userToken: '1001'
+//             }
+//         }
+//     });
+//     return job
+// }
 
 export default {
-    jobX,testJob,createTestJob
+    testJob,jobDBCreator,jobListInstance
 }

@@ -1,19 +1,18 @@
 import { response } from "express";
 import jobmodel from "../models/job-model.js";
 
-async function find(){
+//const userID = 'user1'
+async function find(userID){
     let response
-    await jobmodel.jobX.find().then(data => {
+    await jobmodel.jobListInstance(userID).find().then(data => {
         response = data
-        //res.json(data)
     })
     .catch(err => response.status(500)
     .json(err));
     return response
 }
 async function internalFind(){
-    const response = await jobmodel.jobX.find().then(data => {
-        console.log('ESTOY ACA??');
+    const response = await jobmodel.jobListInstance.find().then(data => {
         return data
     })
     .catch(err => console.log(err));
@@ -21,7 +20,7 @@ async function internalFind(){
 }
 
 function findById(id,res){
-    jobmodel.jobX.findById(id)
+    jobmodel.jobListInstance.findById(id)
     .then(data => {
         if (!data) res.status(404).json({ error: 'Not found 404', message: `Job with id "${id} not found"` })
         res.json(data); 
@@ -31,7 +30,7 @@ function findById(id,res){
 }
 
 function findAndModif(id, body, res){
-    jobmodel.jobX.findByIdAndUpdate(id, body)
+    jobmodel.jobListInstance.findByIdAndUpdate(id, body)
         .then(data => {
             if (!data) res.status(404).json({ error: 'Not found', message: `Job with id "${id} not found"` });
             res.status(201).json({ status: 'Updated', message: `Job with id "${id} updated"` });
@@ -39,12 +38,12 @@ function findAndModif(id, body, res){
         .catch(err => res.status(500).json(err));
 }
 
-function findAndDel(id, res){
+function findAndDel(userID,id, res){
     console.log(`Buscando ID: ${id}`);
-    jobmodel.jobX.findByIdAndDelete(id)
+    jobmodel.jobListInstance(userID).findByIdAndDelete(id)
     .then((data) => {
         if (!data) {
-            res.status(404).json({ error: 'Not found', message: `jobmodel.JobX with id "${id} not found"` })
+            res.status(404).json({ error: 'Not found', message: `jobmodel.jobListInstance with id "${id} not found"` })
             }else{
              res.json({ status: `${id} deleted` })
              console.log('Objeto BORRADO');
@@ -70,22 +69,8 @@ async function createJob(jobParams){       //I kept the body
 }
 
 function newJob(body){
-    const job = new jobmodel.jobX({     ///NECESITO DATOS VALIDOS >> SERVICE
-        tittle: body.tittle,
-        description: body.description,
-        keyWords: body.keyWords,
-        date: body.date,
-        priority: body.priority,
-        motiv: body.motiv,
-        meta: {
-            completed: body.meta.completed,
-            isDelayed: body.meta.isDelayed,
-            isDaily: body.meta.isDaily,
-            countRep: body.meta.countRep
-        }
-        ///////
-    });
-    return job
+    const userID = body.meta.userData.userID
+    return jobmodel.jobDBCreator(userID,body)
 }
 
 export default{

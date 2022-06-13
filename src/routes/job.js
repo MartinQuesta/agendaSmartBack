@@ -1,43 +1,46 @@
 import express from "express";
-import jobshandler from '../controllers/jobsHandler.js'
+import jobsHandler from '../controllers/jobsHandler.js'
 
 
 const Router = express.Router()
 
 Router.get('/', async (req, res) => {
 //Método GET para traer tabla
-res.json(await jobshandler.getJob())
+    await jobsHandler.getJobs(res.body)  //aislo el body del response
+    .then(data => {
+        if (!data) res.status(404).json({ error: 'Not found 404', message: `Jobs not found"` })
+        res.json(data); 
+    })
+    .catch(err => res.status(500).json({ error: 'Not found 500', message: `Jobs GET_ERROR - Not found" and error: ${err}` }))
 })
 
-Router.get('/:id', (req, res) => {
-    //const myRequest = req
-   jobshandler.findJob(req,res)
+Router.get('/:id', async (req, res) => {
+    await jobsHandler.getJobs(req.params)  //aislo el body del response
+    .then(data => {
+        if (!data) res.status(404).json({ error: 'Not found 404', message: `Jobs not found"` })
+        res.json(data); 
+        console.log(data);
+    })
+    .catch(err => res.status(500).json({ error: 'Not found 500', message: `Jobs GET_ERROR - Not found" and error: ${err}` }))
 })
 
 Router.post('/', async (req, res) => {
     const body = req.body
-    jobshandler.createJob(body,res)
-    // .then(response => {
-    //     res.status(200).json({
-    //         'body': response,
-    //         'statusMessage': 'OK'
-    //     })
-    //     console.log('AQUI res');
-    //     console.log(res);
-    //     //res.json(response)
-    // })
-    
-    
-    // res.json(await jobshandler.createJob(request))
+    jobsHandler.createJob(body)
+    .then(response => {
+        res.status(200).json({
+            'data': response
+        })
+    })
 });
 
 Router.patch('/:id', (req, res) => {
-    jobshandler.modifyJob(req,res)
+    jobsHandler.modifyJob(req,res)
 });
 
-Router.delete('/:id', (req, res) => {
+Router.delete('/', (req, res) => {
     console.log('ROUTE DELETE');
-    jobshandler.findAndDel(req,res)
+    jobsHandler.findAndDel(req,res)
 });
 
 export default {
