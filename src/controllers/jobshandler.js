@@ -1,10 +1,9 @@
 import httpToMongo from '../services/httpTransformJobToMongo.js'
 
 async function getJobs(body){
-    console.log(body);
     const userID = body.id
-    console.log(userID);
     const plainList = await httpToMongo.find(userID) //GENERAR UN TDD QUE ENVIE UN GET Y VERIFIQUE LA LISTA DEVUELTA
+    console.log(plainList);
     return plainList;
 }
 
@@ -14,12 +13,8 @@ function findJob(req,res){
     return response
 }
 async function createJob(body,res){
-    console.log('este es el body');
-    console.log(body);
     const response = await httpToMongo.createJob(body)
-    console.log(response);
     return response
-    // return response.data
 }
 
 function modifyJob(req,res){

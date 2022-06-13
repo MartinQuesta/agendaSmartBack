@@ -46,7 +46,7 @@ const jobDBCreator = (instancia,body) => {
     return job
 };
 
-function testJob (){
+function createTestJob (){
     const jobSchema = mongoose.model('job_Test', jobschema)
     
     const job = new jobSchema({     ///NECESITO DATOS VALIDOS >> SERVICE
@@ -93,5 +93,5 @@ function testJob (){
 // }
 
 export default {
-    testJob,jobDBCreator,jobListInstance
+    createTestJob,jobDBCreator,jobListInstance
 }

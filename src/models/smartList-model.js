@@ -39,7 +39,7 @@ function createTestList(){
 }
 
 function testJob(){
-    return Job.testJob()
+    return Job.createTestJob()
 }
 export default{
     smartList,createTestList

@@ -9,7 +9,8 @@ Router.get('/', async (req, res) => {
     await jobsHandler.getJobs(res.body)  //aislo el body del response
     .then(data => {
         if (!data) res.status(404).json({ error: 'Not found 404', message: `Jobs not found"` })
-        res.json(data); 
+        data = 
+        res.json(data);
     })
     .catch(err => res.status(500).json({ error: 'Not found 500', message: `Jobs GET_ERROR - Not found" and error: ${err}` }))
 })
@@ -19,6 +20,7 @@ Router.get('/:id', async (req, res) => {
     .then(data => {
         if (!data) res.status(404).json({ error: 'Not found 404', message: `Jobs not found"` })
         res.json(data); 
+        console.log('JOB RUOUTA');
         console.log(data);
     })
     .catch(err => res.status(500).json({ error: 'Not found 500', message: `Jobs GET_ERROR - Not found" and error: ${err}` }))

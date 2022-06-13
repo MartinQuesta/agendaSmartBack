@@ -26,14 +26,15 @@ const LOCALHOST = `http://127.0.0.1:${PORT}`   // URL of local serever
 describe('Server Job Responses', () => {
     describe('#serverStatus()', () => {
         it('llama a la web ok', async () => {  
-            const response = await axios.get(`${LOCALHOST}/`)        
+            // const response = await axios.get(`${LOCALHOST}/`)        
+            const response = await axios.get(`http://127.0.0.1:3500/#/`)        
             expect(response.status).to.equal(200) //200 OK
         })
     })
     describe('#CRUD Tareas Diarias', () => {
 
         it('get Tareas Diarias', async () => {
-            const response = await axios.get(`${LOCALHOST}/api/tareas/`)
+            const response = await axios.get(`${LOCALHOST}/api/tareas/job_Test`)
             expect(response.status).to.equal(200) //200 OK
         })
         it('Post Tareas Diarias', async () => {
