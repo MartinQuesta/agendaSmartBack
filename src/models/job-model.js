@@ -70,27 +70,7 @@ function createTestJob (){
     // return createTestJob(jobSchema)
     return job
 }
-// function createTestJob(jobSchema){
-//     const job = new jobSchema({     ///NECESITO DATOS VALIDOS >> SERVICE
-//         tittle: 'jobTest1',
-//         description: 'Esto es una descripcion',
-//         keyWords: ['job','Test'],
-//         date: { type:Date, default: Date.now },
-//         priority: 2,
-//         motiv: true,
-//         meta: {
-//             completed: false,
-//             isDelayed: false,
-//             isDaily: true,
-//             countRep: 2,
-//             userData: {
-//                 userID: 'job_Test',
-//                 userToken: '1001'
-//             }
-//         }
-//     });
-//     return job
-// }
+
 
 export default {
     createTestJob,jobDBCreator,jobListInstance

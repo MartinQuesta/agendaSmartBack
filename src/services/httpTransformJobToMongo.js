@@ -1,11 +1,13 @@
 import { response } from "express";
 import jobmodel from "../models/job-model.js";
+import toolsForLists from './toolsForLists.js'
 
 //const userID = 'user1'
 async function find(userID){
     let response
     await jobmodel.jobListInstance(userID).find().then(data => {
-        response = data
+        const orderList = toolsForLists.ordenarTareas(data)
+        response = orderList
     })
     .catch(err => response.status(500)
     .json(err));
