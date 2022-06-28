@@ -6,11 +6,17 @@ import jwt from 'jsonwebtoken'
 
 const Router = express.Router()
 
+let token = ''
+
 Router.post('/', function (req, res) {
 
-    let body = req.body;
+let body = req.body;
+        // Validate user input
+      if (!(body.email && body.password)) {
+      res.status(400).send("All input is required");
+      }
 
-
+//TODO Meter en un controller
 Usuario.user.findOne({ email: body.email }, (erro, usuarioDB)=>{
     if (erro) {
       return res.status(500).json({
@@ -18,7 +24,6 @@ Usuario.user.findOne({ email: body.email }, (erro, usuarioDB)=>{
          err: erro
       })
    }
-   console.log(erro);
 // Verifica que exista un usuario con el mail escrita por el usuario.
   if (!usuarioDB) {
      return res.status(400).json({
@@ -28,10 +33,7 @@ Usuario.user.findOne({ email: body.email }, (erro, usuarioDB)=>{
        }
     })
   }
-  console.log('user aqui');
-  console.log(body);
 
-  console.log(usuarioDB);
   
 // Valida que la contraseña escrita por el usuario, sea la almacenada en la db
   if (! bcrypt.compareSync(body.password, usuarioDB.password)){
@@ -43,29 +45,29 @@ Usuario.user.findOne({ email: body.email }, (erro, usuarioDB)=>{
         }
      });
   }
-  console.log('PASE EL BCRYPT');
-
+  
+  console.log(`PASE EL BCRYPT y muestro UserDB: ${usuarioDB.email}`);
 // Genera el token de autenticación
 
-   let token = jwt.sign({
-          usuario: usuarioDB,
-       }, 'seed-de-prueba', {
-       expiresIn: '24h'
+   token = jwt.sign({
+         usuario: usuarioDB,
+         }, process.env.SEED_AUTENTICACION,{
+         expiresIn: process.env.CADUCIDAD_TOKEN //'24h'
    })
+   usuarioDB.token = token;
+
    res.json({
        ok: false,
        usuario: usuarioDB,
        token,
    })
-   console.log('login salida------------------------------------------------');
-   console.log(token);
 })
 
 })
 
 
 export default {
-   Router
+   Router,token
 }
 
 

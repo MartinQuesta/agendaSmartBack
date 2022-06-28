@@ -12,10 +12,7 @@ function findUser(req,res){
 }
 async function createUser(body,res){
     const response = res
-    console.log('este es el body');
-    console.log(body);
     await transformhttp.createUser(body).then(user => response.json(user))
-    console.log(response);
     return response
     // return response.data
 }

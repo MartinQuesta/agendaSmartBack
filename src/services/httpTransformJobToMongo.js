@@ -1,10 +1,13 @@
 import { response } from "express";
 import jobmodel from "../models/job-model.js";
+import statisticService from "./statisticService.js";
 import toolsForLists from './toolsForLists.js'
+
 
 //const userID = 'user1'
 async function find(userID){
     let response
+    console.log(`Aqui el UserID: ${userID}`);
     await jobmodel.jobListInstance(userID).find().then(data => {
         const orderList = toolsForLists.ordenarTareas(data)
         response = orderList
@@ -31,8 +34,8 @@ function findById(id,res){
     //return res        /////PORQUE DEVUELVE IGUAL 
 }
 
-function findAndModif(id, body, res){
-    jobmodel.jobListInstance.findByIdAndUpdate(id, body)
+function findAndModif(userID,id, body, res){
+    jobmodel.jobListInstance(userID).findByIdAndUpdate(id, body)
         .then(data => {
             if (!data) res.status(404).json({ error: 'Not found', message: `Job with id "${id} not found"` });
             res.status(201).json({ status: 'Updated', message: `Job with id "${id} updated"` });
@@ -71,8 +74,18 @@ async function createJob(jobParams){       //I kept the body
 }
 
 function newJob(body){
-    const userID = body.meta.userData.userID
+    const userID = cleanMail(body.meta.userData.userID)
+    console.log(body.meta.userData.userID);
+    console.log('suerID');
+    console.log(userID);
     return jobmodel.jobDBCreator(userID,body)
+}
+
+function cleanMail(email){
+    let newStr = email.replace(/@/g, '');
+    newStr = newStr.replace(/\./g, '');
+    console.log('After character removed: ', newStr);
+    return newStr;
 }
 
 export default{

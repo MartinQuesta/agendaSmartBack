@@ -3,8 +3,6 @@
 export default {
     ordenarTareas(lista){
         var arr = Object.entries(lista).map((i) => i[1])
-        console.log('aqui el arry desde listaTools');
-        console.log(arr[1]._id);
         const nuevaLista = arr.sort((a,b) => { return this.ordenoPriori(a,b)})
         return nuevaLista
     },

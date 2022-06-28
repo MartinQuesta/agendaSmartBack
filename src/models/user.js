@@ -37,6 +37,7 @@ let usuarioSchema = new Schema({
         required: [true],
         enum: rolesValidos,
     },
+    token: String,
 });
 
 const user = mongoose.model('Usuario', usuarioSchema)
@@ -47,7 +48,7 @@ usuarioSchema.methods.toJSON = function() {
     delete userObject.password;
     return userObject;
  }
-
+//Tool de validacion de User
  usuarioSchema.plugin(uniqueValidator, {
     message: '{PATH} debe de ser único'
 })

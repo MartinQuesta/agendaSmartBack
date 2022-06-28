@@ -10,41 +10,18 @@ import Jobs from './routes/job.js'
 import Lists from './routes/userList.js'
 import bodyParser from 'body-parser'
 import path from 'path';
+import './config/config.js'
 //import {config} from 'dotenv'
 //const express = require('express')
 const app = express();     ////Initializing Express 2
 
 
-let renderHTML = path.resolve('./index.html');
+let renderHTML = path.resolve('./src/index.html');
 app.get('/', function (req, res) {
     res.sendFile(renderHTML);
 })
 
-/*
-mongoose.connect(process.env.URLDB, {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useUnifiedTopology: true
-}, (err) => {
-  if (err) throw err;
-      
-  console.log("Base de datos online");
-});
-
-app.listen(process.env.PORT, ()=> {
-  console.log("Escuchando en puerto 3000");
-})
-*/
-
-//simulo una base de datos en memoria
-// usuarios:
 const list = [{user:"Juan",pass:123},{user:"Tincho",pass:124}]
-
-
-
-
-
-
 
 //const config = dotenv.config()
 import './models/smartList-model.js';   //Model de lista Smart
@@ -86,14 +63,21 @@ app.get('/', (req, res) => {
   res.send('Agenda Hyper Mega Super InteligentE 2022!')
 })
 
+app.use(function (req, res, next){
+
+  next()
+})
+
+
 app.use('/api/tareas', Jobs.Router)
 app.use('/api/lists', Lists.Router)
 app.use('/login', Login.Router);
 app.use('/register', Register.Router);
 
 
-app.use(function (req, res, next){
-  next(createError(404))
+app.use((err, req, res, next) => {
+  console.error(err.stack)
+  res.status(500).send('Something broke!')
 })
 /*
 app.get('/api/gettareas/diarias', (req, res) => {

@@ -67,7 +67,6 @@ function createTestJob (){
             }
         }
     });
-    // return createTestJob(jobSchema)
     return job
 }
 

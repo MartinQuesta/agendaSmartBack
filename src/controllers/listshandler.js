@@ -6,14 +6,11 @@ function getList(res){
 
 function findList(req,res){
     const id = req.params.id
-    //console.log(id); ///LLEGA EL ID ACA TDD!!!!!!!!!!!!!
     return transformhttp.findById(id,res)
 }
 
 async function createList(req,res){
-  //console.log(req.body);              //the body is OK??
     const list = transformhttp.newList(req.body)       //I kept the body
-  //console.log(List);                 // model its OK??
     try {
         const listGuardada = await list.save();
         res.status(200).json({

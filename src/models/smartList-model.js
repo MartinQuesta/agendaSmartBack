@@ -11,13 +11,11 @@ const smartListschema = new Schema({
         id: Number,
         userName: String
     }
-  //{id:1, desc:'TareaXDiaria', prioridad:2,  palabraClave:'TareaX', motiv:'false', atrasada:0, cantRep:1, esDia: 'true'},
 })
 
 
 const smartList = mongoose.model('smartList', smartListschema)
 
-console.log(testList()); //Test New List !!!!!!!!!!
 
 function testList() {
     return createTestList()
@@ -42,6 +40,6 @@ function testJob(){
     return Job.createTestJob()
 }
 export default{
-    smartList,createTestList
+    smartList,createTestList,testList
 }
 //module.exports = smartList

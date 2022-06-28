@@ -75,7 +75,8 @@ function newUser(body){
         edad: body.edad,
         email: body.email,
         password: body.password,
-        rol: body.rol
+        rol: body.rol,
+        token: body.token
         ///////
     });
     return user

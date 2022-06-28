@@ -5,7 +5,6 @@ import transformJobhttp from "./httpTransformJobToMongo.js";
 async function full(list){
     console.log('Smart Order Service');
     let data = await transformJobhttp.internalFind()
-    console.log(data);
     data = listaTools.ordenarTareas(data)
     list.data = data
 
